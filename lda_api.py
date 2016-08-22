@@ -21,24 +21,24 @@ def filter_words(words):
 class show_topics(Resource):
     def get(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('show_topic', type=int, required=True, help="Number of results.")
+        parser.add_argument('number', type=int, required=True, help="Number of results.")
         args = parser.parse_args()
-        return model.show_topic(args['show_topic'])
+        return model.show_topic(args['number'])
 
 
 class print_topics(Resource):
     def get(self):
         parser = reqparse.RequestParser()
-		parser.add_argument('print_topic', type=int, required=True, help="Number of results.")
+		parser.add_argument('number', type=int, required=True, help="Number of results.")
         args = parser.parse_args()
-        return model.print_topics(args['print_topic'])
+        return model.print_topics(args['number'])
 
 
 class topic(Resource):
     def get(self):
         parser = reqparse.RequestParser()
-		parser.add_argument('topic', type=str, required=True, help="", action='append')
-		query = args['topic'].split()
+		parser.add_argument('sentence', type=str, required=True, help="", action='append')
+		query = args['sentence'].split()
         bow = model.id2word.doc2bow(query)
         topic_analysis = model[bow]
         args = parser.parse_args()
