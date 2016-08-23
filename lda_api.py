@@ -29,21 +29,24 @@ class show_topics(Resource):
 class print_topics(Resource):
     def get(self):
         parser = reqparse.RequestParser()
-		parser.add_argument('number', type=int, required=True, help="Number of results.")
+        parser.add_argument('number', type=int, required=True, help="Number of results.")
         args = parser.parse_args()
         return model.print_topics(args['number'])
 
 
-class topic(Resource):
+class topics(Resource):
     def get(self):
         parser = reqparse.RequestParser()
-		parser.add_argument('sentence', type=str, required=True, help="", action='append')
-		query = args['sentence'].split()
-        bow = model.id2word.doc2bow(query)
-        topic_analysis = model[bow]
+        parser.add_argument('sentence', type=str, required=True)
         args = parser.parse_args()
-        return topic_analysis
-        
+        try:
+            query = args['sentence'].split()
+            bow = model.id2word.doc2bow(query)
+            topic_analysis = model[bow]
+            return topic_analysis
+        except Exception, e:
+            print e
+            print topic_analysis
 
 
 
@@ -80,6 +83,6 @@ if __name__ == '__main__':
     model = gensim.models.LdaModel.load(model_path)
     api.add_resource(show_topics, path+'/show_topics')
     api.add_resource(print_topics, path+'/print_topics')
-    api.add_resource(topic, path+'/topic')
+    api.add_resource(topics, path+'/topics')
     
     app.run(host=host, port=port)
