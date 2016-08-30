@@ -1,5 +1,5 @@
 # lda-api
-Simple web service that will enable the LDA. The methods are based on Gensim LDA implementation. Models are passed as parameters and must be in the LDA  binary format.
+Simple web service that will enable the LDA method access though web. The methods are based on Gensim LDA implementation. Models are passed as parameters and must be in the LDA  binary format.
 
 - Launching the service
 ```
